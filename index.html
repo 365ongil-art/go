@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e2231a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="온길산업" />
+  <title>온길산업 · 고소작업대 정부지원 랜딩페이지</title>
+  <style>
+    :root {
+      --red: #e2231a;
+      --red-dark: #b31612;
+      --ink: #1a1d24;
+      --dark: #23272f;
+      --darker: #1a1d24;
+      --muted: #6b7280;
+      --line: #e6e8ee;
+      --bg-soft: #f4f6f9;
+      --kakao: #fae100;
+      --radius: 14px;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif; color: var(--ink); line-height: 1.6; background:#fff; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 26px; border-radius:8px; font-weight:800; font-size:16px; cursor:pointer; border:none; transition:transform .15s, box-shadow .15s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-red { background: var(--red); color:#fff; box-shadow:0 8px 20px rgba(226,35,26,.25); }
+    .btn-ghost { background: rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.5); }
+    .btn-kakao { background: var(--kakao); color:#3a1d1d; }
+    .btn-outline { background:#fff; color:var(--ink); border:1px solid var(--line); }
+    .btn-dark { background:#2b2f38; color:#fff; border:1px solid #2b2f38; }
+    .section { padding: 84px 0; }
+    .section-soft { background: var(--bg-soft); }
+    .section-dark { background: var(--dark); color:#fff; }
+    .eyebrow { color: var(--red); font-weight:800; letter-spacing:.14em; font-size:13px; text-transform:uppercase; }
+    .section h2 { font-size:32px; font-weight:900; margin:10px 0 14px; line-height:1.3; }
+    .section .lead { color: var(--muted); font-size:17px; }
+    .section-dark .lead { color: rgba(255,255,255,.72); }
+    .center { text-align:center; }
+    .center .lead { margin:0 auto; max-width:680px; }
+
+    /* ===== Header ===== */
+    header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+    .nav { display:flex; align-items:center; justify-content:space-between; height:70px; }
+    .logo { display:flex; align-items:center; gap:9px; font-weight:900; font-size:21px; color:var(--ink); }
+    .logo img { width:36px; height:36px; object-fit:contain; }
+    .nav-menu { display:flex; gap:34px; }
+    .nav-menu a { color:#333; font-weight:700; font-size:16px; }
+    .nav-menu a:hover { color:var(--red); }
+    .nav-cta { display:flex; align-items:center; gap:16px; }
+    .nav-tel { font-weight:900; font-size:18px; color:var(--ink); }
+    .nav-cta .btn { padding:11px 20px; font-size:15px; }
+    .nav-toggle { display:none; background:none; border:none; font-size:26px; line-height:1; cursor:pointer; color:var(--ink); padding:2px 4px; }
+    @media (max-width:960px){
+      .nav-tel { display:none; }
+      .nav-toggle { display:block; }
+      .nav-menu { display:none; position:absolute; top:70px; left:0; right:0; flex-direction:column; gap:0; background:#fff; border-bottom:1px solid var(--line); box-shadow:0 10px 24px rgba(0,0,0,.08); }
+      .nav-menu.open { display:flex; }
+      .nav-menu a { padding:15px 22px; border-top:1px solid var(--line); }
+    }
+
+    /* ===== Hero (3-image carousel) ===== */
+    .hero { position:relative; color:#fff; overflow:hidden; aspect-ratio:12/5; display:flex; align-items:center; } /* 2.4:1(1200:500) 틀. 16:9 원본은 center 기준 상·하 약 13%씩만 트림 */
+    .hero-fill { position:relative; z-index:2; width:100%; }
+    .hero-slides { position:absolute; inset:0; z-index:0; }
+    .hero-slides .slide { position:absolute; inset:0; background-size:cover; background-position:center center; opacity:0; transition:opacity 1s ease; }
+    .hero-slides .slide.on { opacity:1; }
+    .hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(100deg, rgba(20,22,28,.92) 0%, rgba(20,22,28,.55) 55%, rgba(20,22,28,.25) 100%); }
+    .hero-inner { position:relative; z-index:2; max-width:620px; }
+    .hero .kicker { font-size:17px; opacity:.9; }
+    .hero h1 { font-size:52px; font-weight:900; line-height:1.18; margin:12px 0 18px; }
+    .hero h1 .hl { color:var(--red); }
+    .hero .sub { font-size:18px; opacity:.9; margin-bottom:28px; }
+    .hero-badges { display:inline-flex; background:rgba(15,17,22,.5); border:1px solid rgba(255,255,255,.18); border-radius:14px; padding:4px; margin-bottom:32px; }
+    .hbadge { display:flex; align-items:center; gap:12px; padding:12px 24px; }
+    .hbadge + .hbadge { border-left:1px solid rgba(255,255,255,.18); }
+    .hbadge .ic { width:40px; height:40px; border-radius:50%; border:2px solid rgba(255,255,255,.5); color:#fff; display:grid; place-items:center; flex-shrink:0; }
+    .hbadge .ic svg { width:20px; height:20px; }
+    .hbadge b { display:block; font-size:15px; font-weight:800; }
+    .hbadge span { display:block; font-size:12px; opacity:.72; white-space:nowrap; }
+    @media (max-width:600px){ .hero-badges{ display:flex; flex-wrap:wrap; } .hbadge+.hbadge{ border-left:none; } }
+    .hero-actions { display:flex; gap:12px; flex-wrap:wrap; }
+    .hero-carousel { position:absolute; right:32px; top:120px; z-index:2; text-align:center; font-size:13px; opacity:.85; }
+    .hero-carousel .num { font-size:22px; font-weight:900; }
+    .hero-carousel .dots { display:flex; flex-direction:column; gap:8px; margin-top:12px; align-items:center; }
+    .hero-carousel .dots i { width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.4); display:block; cursor:pointer; }
+    .hero-carousel .dots i.on { background:#fff; }
+    .scroll-hint { position:absolute; left:50%; bottom:22px; z-index:2; transform:translateX(-50%); color:#fff; font-weight:800; opacity:.8; animation:bounce 1.6s infinite; }
+    @keyframes bounce { 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,8px);} }
+    @media (max-width:760px){ .hero h1{font-size:36px;} .hero-carousel{display:none;} }
+
+    /* ===== PRODUCTS (rich cards) ===== */
+    .prod-sub { color:var(--muted); font-size:16px; margin-top:2px; }
+    .prod-grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(7,auto); gap:0 22px; margin-top:40px; text-align:left; }
+    .pcard { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; display:grid; grid-row:1 / -1; grid-template-rows:subgrid; box-shadow:0 6px 20px rgba(20,30,60,.06); }
+    .pcard-head { background:var(--c); color:#fff; text-align:center; padding:14px; font-weight:900; font-size:18px; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .pcard-top { display:flex; gap:14px; padding:18px; align-items:center; }
+    .pcard-img { width:44%; height:220px; background:var(--bg-soft); border-radius:8px; overflow:hidden; flex-shrink:0; }
+    .pcard-img img { width:100%; height:100%; object-fit:cover; object-position:center; }
+    .pcard-tag { flex:1; }
+    .pcard-tag .t1 { font-size:13px; color:var(--muted); }
+    .pcard-tag .t2 { font-size:19px; font-weight:900; color:var(--c); line-height:1.28; margin-top:2px; }
+    .pcard-specs { display:flex; gap:12px; padding:12px 18px 4px; }
+    .pspec { flex:1; display:flex; align-items:center; gap:8px; min-width:0; }
+    .pspec + .pspec { border-left:1px solid var(--line); padding-left:12px; }
+    .pspec .ic { width:30px; height:30px; border-radius:8px; background:var(--cl); color:var(--c); display:grid; place-items:center; font-size:14px; flex-shrink:0; }
+    .pspec .lbl { font-size:11px; color:var(--muted); white-space:nowrap; }
+    .pspec .val { font-size:13.5px; font-weight:800; white-space:nowrap; }
+    .pcard-more { margin:12px 18px 14px; text-align:center; font-size:12.5px; font-weight:800; color:var(--c); border:1px dashed var(--c); border-radius:8px; padding:8px; cursor:pointer; }
+    .pcard-more:hover { background:var(--cl); }
+    .pcard-cols { display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--line); }
+    .pcol { padding:16px; text-align:left; }
+    .pcol:first-child { border-right:1px solid var(--line); }
+    .pcol h5 { color:var(--c); font-weight:900; font-size:14px; margin-bottom:10px; }
+    .pcol ul { list-style:none; }
+    .pcol li { font-size:12.5px; line-height:1.5; margin-bottom:7px; padding-left:16px; position:relative; color:#333; }
+    .pcol.env li:before { content:'•'; position:absolute; left:3px; color:var(--c); }
+    .pcol.adv li:before { content:'✓'; position:absolute; left:0; color:#2e9e4f; font-weight:900; }
+    .pcard-rec { padding:16px 18px; border-top:1px solid var(--line); }
+    .pcard-rec h5 { color:var(--c); font-weight:900; font-size:14px; margin-bottom:12px; }
+    .rec-icons { display:flex; gap:6px; }
+    .rec-icons .ri { text-align:center; flex:1; }
+    .rec-icons .ri .em { font-size:22px; }
+    .rec-icons .ri span { display:block; font-size:10.5px; color:var(--muted); margin-top:5px; line-height:1.3; }
+    .pcard-point { background:var(--cl); padding:15px 18px; margin-top:auto; }
+    .pcard-point .h { font-weight:900; font-size:13px; color:var(--c); display:flex; gap:6px; align-items:center; }
+    .pcard-point p { font-size:12px; color:#444; margin-top:5px; line-height:1.5; }
+    @media (max-width:960px){ .prod-grid{grid-template-columns:1fr; grid-template-rows:auto; gap:22px; max-width:460px; margin-left:auto; margin-right:auto;} .pcard{display:flex; flex-direction:column; grid-row:auto; grid-template-rows:none;} }
+
+    /* ===== CTA band ===== */
+    .cta-band { background:var(--darker); color:#fff; }
+    .cta-band .wrap { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:36px 20px; flex-wrap:wrap; }
+    .cta-band h3 { font-size:26px; font-weight:900; }
+    .cta-band .tel { font-size:30px; font-weight:900; }
+    .cta-band .tel small { display:block; font-size:13px; font-weight:600; opacity:.7; }
+
+    /* ===== Form ===== */
+    .form-wrap { display:grid; grid-template-columns:1.6fr 1fr; gap:24px; margin-top:36px; }
+    .form-card { background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:34px; }
+    .form-card h3 { font-size:24px; margin-bottom:4px; }
+    .form-card .desc { color:var(--muted); font-size:14px; margin-bottom:22px; }
+    .frow { margin-bottom:16px; }
+    .frow label { display:block; font-weight:800; font-size:14px; margin-bottom:6px; }
+    .frow label .req { color:var(--red); }
+    .frow input, .frow textarea, .frow select { width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:9px; font-size:15px; font-family:inherit; }
+    .frow input.invalid, .frow textarea.invalid { border-color:var(--red); background:#fff6f5; }
+    .ferr { color:var(--red); font-size:12.5px; margin-top:6px; font-weight:600; }
+    .frow textarea { min-height:96px; resize:vertical; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .checks { display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; text-align:left; }
+    .checks label { display:flex; align-items:center; justify-content:flex-start; gap:6px; font-weight:600; font-size:14px; white-space:nowrap; }
+    .agree { display:flex; align-items:center; gap:8px; font-size:14px; color:var(--muted); }
+    .agree-wrap { margin:18px 0 16px; }
+    .agree-wrap .ferr { margin-top:8px; }
+    .privacy-link { color:var(--red); cursor:pointer; }
+    .privacy-back { position:fixed; inset:0; background:rgba(20,22,28,.55); z-index:130; display:none; align-items:center; justify-content:center; padding:20px; }
+    .privacy-back.open { display:flex; }
+    .privacy-modal { background:#fff; border-radius:16px; padding:26px 24px; width:100%; max-width:540px; }
+    .privacy-modal h4 { font-size:19px; text-align:center; margin-bottom:16px; }
+    .privacy-close { width:100%; padding:13px; border:none; border-radius:11px; font-weight:800; cursor:pointer; margin-top:18px; color:#fff; background:var(--red); }
+    .privacy-body { max-height:44vh; overflow-y:auto; background:#faf9f8; border:1px solid var(--line); border-radius:10px; padding:14px 16px; color:#555; line-height:1.7; white-space:pre-line; font-size:12.5px; word-break:keep-all; }
+    .form-card .btn { width:100%; }
+    .side-card { background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:28px; text-align:center; margin-bottom:18px; }
+    .side-card .ic { width:52px; height:52px; border-radius:50%; display:grid; place-items:center; margin:0 auto 12px; font-size:22px; }
+    .side-card.tel .ic { background:#fdeceb; color:var(--red); }
+    .side-card.kko .ic { background:var(--kakao); }
+    .side-card h4 { font-size:18px; }
+    .side-card .big { font-size:26px; font-weight:900; margin:6px 0; }
+    .side-card small { color:var(--muted); }
+    @media (max-width:860px){ .form-wrap{grid-template-columns:1fr;} .two{grid-template-columns:1fr;} }
+
+    /* ===== KEY FEATURES (dark) ===== */
+    .kf-top { display:grid; grid-template-columns:1fr 2fr; gap:30px; align-items:center; margin-bottom:40px; }
+    .kf-top .lead { color:rgba(255,255,255,.72); }
+    .feat-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+    .feat { position:relative; border-radius:var(--radius); overflow:hidden; min-height:220px; display:flex; flex-direction:column; justify-content:flex-end; padding:22px; color:#fff;
+      background:linear-gradient(180deg, rgba(30,32,38,.2), rgba(15,16,20,.92)), url("https://picsum.photos/id/1076/400/500") center/cover; }
+    .feat .ic { width:44px; height:44px; border-radius:10px; background:rgba(255,255,255,.15); display:grid; place-items:center; font-size:20px; margin-bottom:12px; }
+    .feat h4 { font-size:17px; margin-bottom:6px; }
+    .feat p { font-size:13px; opacity:.8; }
+    @media (max-width:960px){ .feat-grid{grid-template-columns:repeat(2,1fr);} .kf-top{grid-template-columns:1fr;} }
+
+    /* ===== Gallery (auto marquee) ===== */
+    .gal-head { display:flex; align-items:center; justify-content:space-between; }
+    .marquee { overflow:hidden; margin-top:26px; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+    .marquee-track { display:flex; gap:12px; width:max-content; animation:scrollx 40s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state:paused; }
+    .marquee img { height:180px; width:280px; object-fit:cover; border-radius:10px; pointer-events:none; user-select:none; }
+    @keyframes scrollx { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+    /* ===== Gov support benefits ===== */
+    .gov-wrap { display:grid; grid-template-columns:1fr 2fr; gap:34px; align-items:center; }
+    .gov-wrap h2 { font-size:30px; }
+    .ben-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .ben { text-align:center; padding:24px 14px; }
+    .ben .ic { width:64px; height:64px; border-radius:16px; background:#fff; border:1px solid var(--line); display:grid; place-items:center; margin:0 auto 14px; font-size:26px; }
+    .ben b { display:block; font-size:16px; margin-bottom:4px; white-space:nowrap; }
+    .ben span { color:var(--muted); font-size:13px; word-break:keep-all; }
+    @media (max-width:860px){ .gov-wrap{grid-template-columns:1fr;} .ben-grid{grid-template-columns:1fr 1fr;} }
+    .point-box { display:flex; gap:16px; align-items:flex-start; background:#eef4ff; border:1px solid #d6e4ff; border-left:5px solid #2f6fed; border-radius:14px; padding:20px 22px; margin-top:34px; }
+    .point-badge { flex:none; background:#2f6fed; color:#fff; font-weight:800; font-size:13px; letter-spacing:.06em; padding:7px 15px; border-radius:8px; margin-top:2px; }
+    .point-box p { font-size:15px; line-height:1.75; color:#28374f; word-break:keep-all; }
+    .point-box b { color:#1b4fd0; font-weight:800; }
+    .point-box u { color:#1b4fd0; text-decoration:underline; font-weight:700; }
+    .point-note { margin-top:14px; font-size:13px; color:var(--muted); word-break:keep-all; }
+    @media (max-width:600px){ .point-box{ flex-direction:column; gap:10px; padding:18px; } .point-badge{ align-self:flex-start; } }
+
+    /* ===== Steps ===== */
+    .steps { display:flex; align-items:flex-start; justify-content:space-between; gap:6px; margin-top:44px; overflow-x:auto; }
+    .step { flex:1; min-width:120px; text-align:center; }
+    .step .ic { width:70px; height:70px; border-radius:50%; background:#fff; border:2px solid var(--line); display:grid; place-items:center; margin:0 auto 12px; font-size:26px; }
+    .step b { display:block; font-size:16px; }
+    .step span { color:var(--muted); font-size:13px; }
+    .step-arrow { display:flex; align-items:center; color:#c4c9d4; font-size:22px; padding-top:24px; }
+    @media (max-width:860px){ .step-arrow{display:none;} .steps{flex-wrap:wrap;} .step{min-width:40%;} }
+
+    /* ===== Reviews (testimonial cards) ===== */
+    .rev-grid { column-count:3; column-gap:18px; margin-top:44px; }
+    .rev-card { break-inside:avoid; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:24px; margin-bottom:18px; text-align:left; }
+    .rev-stars { color:#ffb400; font-size:16px; margin-bottom:10px; }
+    .rev-text { font-size:14px; line-height:1.65; color:#333; }
+    .rev-who { margin-top:14px; padding-top:12px; border-top:1px solid var(--line); font-weight:800; font-size:14px; }
+    .rev-who span { display:block; color:var(--muted); font-weight:600; font-size:12px; }
+    @media (max-width:960px){ .rev-grid{column-count:2;} }
+    @media (max-width:600px){ .rev-grid{column-count:1;} }
+
+    /* ===== Footer ===== */
+    footer { background:var(--darker); color:#9aa3b2; padding:44px 0 30px; font-size:14px; }
+    footer .ftop { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; padding-bottom:22px; border-bottom:1px solid rgba(255,255,255,.1); margin-bottom:22px; }
+    footer .flogo { color:#fff; font-weight:900; font-size:20px; }
+    footer .fnav { display:flex; gap:22px; flex-wrap:wrap; }
+    footer .fnav a { color:#c4c9d4; font-weight:600; }
+    footer .sns { display:flex; gap:10px; }
+    footer .sns a { width:34px; height:34px; border-radius:8px; overflow:hidden; display:block; background:#fff; }
+    footer .sns a img { width:100%; height:100%; object-fit:cover; }
+
+    /* ===== Floating side buttons ===== */
+    .floats { position:fixed; right:16px; bottom:24px; z-index:60; display:flex; flex-direction:column; gap:8px; }
+    .floats a { width:56px; height:56px; border-radius:14px; background:#fff; border:1px solid var(--line); box-shadow:0 6px 16px rgba(0,0,0,.1); display:grid; place-items:center; font-size:20px; color:var(--red); text-align:center; line-height:1.1; }
+    .floats a.small { font-size:11px; font-weight:800; color:var(--red); }
+    .floats a img.logo { width:100%; height:100%; object-fit:contain; padding:8px; }
+    /* 전화번호 선택 팝업 */
+    .tel-back { position:fixed; inset:0; background:rgba(20,22,28,.55); z-index:110; display:none; align-items:center; justify-content:center; padding:20px; }
+    .tel-back.open { display:flex; }
+    .tel-box { background:#fff; border-radius:16px; padding:28px 24px; width:100%; max-width:340px; text-align:center; }
+    .tel-box h4 { font-size:20px; margin-bottom:4px; }
+    .tel-box .sub { color:var(--muted); font-size:14px; margin-bottom:18px; }
+    .tel-opt { display:flex; flex-direction:column; padding:14px; border-radius:11px; color:#fff; font-weight:800; margin-bottom:10px; }
+    .tel-opt small { font-weight:600; opacity:.85; font-size:12px; margin-bottom:2px; }
+    .tel-opt .num { font-size:20px; }
+    .tel-opt.a { background:var(--red); }
+    .tel-opt.b { background:#2b2f38; }
+    .tel-close { width:100%; padding:12px; border:1px solid var(--line); background:#fff; border-radius:11px; font-weight:700; cursor:pointer; margin-top:4px; }
+
+    /* ===== 신청 결과/검증 팝업 ===== */
+    .result-back { position:fixed; inset:0; background:rgba(20,22,28,.55); z-index:130; display:none; align-items:center; justify-content:center; padding:20px; }
+    .result-back.open { display:flex; }
+    .result-box { background:#fff; border-radius:16px; padding:30px 26px; width:100%; max-width:380px; text-align:center; }
+    .result-ic { width:62px; height:62px; border-radius:50%; display:grid; place-items:center; margin:0 auto 16px; font-size:32px; font-weight:900; line-height:1; }
+    .result-box.ok .result-ic { background:#e7f7ee; color:#2e9e5b; }
+    .result-box.err .result-ic { background:#fdecea; color:var(--red); }
+    .result-box h4 { font-size:20px; margin-bottom:8px; }
+    .result-msg { color:var(--muted); font-size:14px; line-height:1.65; }
+    .result-msg ul { margin:6px 0 0; padding-left:20px; text-align:left; }
+    .result-msg li { margin-bottom:5px; }
+    .result-close { width:100%; padding:13px; border:none; border-radius:11px; font-weight:800; cursor:pointer; margin-top:22px; color:#fff; }
+    .result-box.ok .result-close { background:#2e9e5b; }
+    .result-box.err .result-close { background:var(--red); }
+    @media (max-width:860px){ .floats a{width:46px;height:46px;font-size:16px;} }
+
+    /* ===== Modal (제품 사양 팝업) ===== */
+    .modal-back { position:fixed; inset:0; background:rgba(20,22,28,.6); z-index:100; display:none; align-items:flex-start; justify-content:center; padding:40px 16px; overflow-y:auto; }
+    .modal-back.open { display:flex; }
+    .modal { background:#fff; border-radius:16px; max-width:1080px; width:100%; padding:34px; }
+    .modal-head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:8px; }
+    .modal-head h3 { font-size:26px; }
+    .modal-head p { color:var(--muted); font-size:14px; }
+    .modal-close { background:none; border:none; font-size:26px; cursor:pointer; color:#333; }
+    .spec-block { margin-top:26px; }
+    .spec-brand { font-weight:900; font-size:18px; margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+    .spec-brand .badge { padding:3px 10px; border-radius:6px; color:#fff; font-size:13px; }
+    .spec-brand .cnt { color:var(--muted); font-size:13px; font-weight:600; }
+    .table-scroll { overflow-x:auto; }
+    .spec-table { width:100%; border-collapse:collapse; min-width:760px; }
+    .spec-table th, .spec-table td { border:1px solid var(--line); padding:11px; text-align:center; font-size:13.5px; }
+    .spec-table thead th { background:var(--bg-soft); font-weight:800; }
+    .spec-table td.model { font-weight:800; text-align:left; }
+    .spec-note { color:var(--muted); font-size:12.5px; margin-top:8px; line-height:1.6; }
+    .cmp-table { width:100%; border-collapse:collapse; min-width:760px; }
+    .cmp-table th, .cmp-table td { border:1px solid var(--line); padding:12px; font-size:13px; vertical-align:top; }
+    .cmp-table thead th { background:var(--darker); color:#fff; text-align:center; font-size:15px; }
+    .cmp-table th.rowhead { background:var(--bg-soft); width:90px; text-align:center; font-weight:800; }
+    .cmp-table td b { color:var(--red); }
+    .cmp-table ul { margin:0; padding-left:16px; }
+    .cmp-table li { margin-bottom:4px; }
+    .modal-actions { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:26px; }
+    .modal-note { text-align:center; color:var(--muted); font-size:13px; margin-top:16px; }
+    @media (max-width:760px){ .modal-actions{grid-template-columns:1fr;} .modal{padding:22px;} }
+    /* 모바일 여백/타이포 최적화 */
+    @media (max-width:600px){
+      .section { padding:54px 0; }
+      .section h2 { font-size:26px; }
+      .hero { aspect-ratio:auto; padding:70px 0 84px; }
+      .hero h1 { font-size:32px; }
+      .hero .sub { font-size:16px; }
+      .form-card { padding:24px 20px; }
+      .checks { flex-direction:column; gap:11px; }
+      .hero-actions { flex-direction:column; align-items:stretch; }
+      .hero-actions .btn { width:100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER (로고 삭제) ===== -->
+  <header>
+    <div class="wrap nav">
+      <a href="#" class="logo"><img src="https://drive.google.com/thumbnail?id=1LY7ZrhFKDPB5AD7RLZ-C2zfKNlOVadP_&amp;sz=w200" alt="온길산업 로고"> 온길산업</a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="#products">제품소개</a>
+        <a href="#gov">정부지원안내</a>
+        <a href="#gallery">납품사례</a>
+        <a href="#contact">상담 문의</a>
+      </nav>
+      <div class="nav-cta">
+        <span class="nav-tel">📞 010-2925-9902</span>
+        <a href="#" class="btn btn-dark js-tel">전화문의</a>
+        <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO (이미지 3장 자동 전환) ===== -->
+  <section class="hero">
+    <!-- 메인이미지 1·2·3 (기획서 Drive 링크) / 로컬 백업: hero.png -->
+    <div class="hero-slides">
+      <div class="slide on" style="background-image:url('https://drive.google.com/thumbnail?id=1oWVd4tYJ4IfaMbKIbHvsUrZuSe8mSGz1&amp;sz=w1942')"></div>
+      <div class="slide" style="background-image:url('https://drive.google.com/thumbnail?id=1VobQ0OxG5jhYeOycXwsYIdK59mHQ7AvP&amp;sz=w1942')"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-fill">
+    <div class="wrap hero-inner">
+      <div class="kicker">산업안전과 효율을 높이는 선택</div>
+      <h1>고소작업대<br><span class="hl">최대 90%</span> 정부지원</h1>
+      <p class="sub">작업 효율을 높이고, 부담은 낮추세요.<br>온길산업이 안전한 현장을 만들어 드립니다.</p>
+      <div class="hero-badges">
+        <div class="hbadge"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z"/></svg></span><div><b>정부지원</b><span>최대 90%</span></div></div>
+        <div class="hbadge"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5"/><path d="M12 12v9"/></svg></span><div><b>전국납품</b><span>전국 어디든</span></div></div>
+        <div class="hbadge"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5a4 4 0 00-5.3 5.2L4 15.4 8.6 20l5.7-5.7A4 4 0 0019.5 9l-2.8 2.8-2.5-2.5L17 6.5 15 4.5z"/></svg></span><div><b>체계적인 A/S</b><span>전문 서비스팀</span></div></div>
+      </div>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-red">무료 상담 신청</a>
+        <a href="#contact" class="btn btn-outline">제품 카탈로그 신청</a>
+        <a href="#" class="btn btn-ghost js-tel">전화문의</a>
+      </div>
+    </div>
+    </div>
+    <div class="hero-carousel">
+      <div class="num" id="heroNum">01</div>
+      <div class="dots" id="heroDots"><i class="on" data-i="0"></i><i data-i="1"></i></div>
+    </div>
+    <div class="scroll-hint">↓ SCROLL</div>
+  </section>
+
+  <!-- ===== PRODUCTS (rich cards) ===== -->
+  <section class="section center" id="products">
+    <div class="wrap">
+      <div class="eyebrow">PRODUCTS</div>
+      <h2>현장에 맞는 <span style="color:var(--red)">최적의</span> 고소작업대를 만나보세요</h2>
+      <p class="prod-sub">작업 환경, 안전, 효율까지 고려한 3가지 타입의 고소작업대</p>
+      <div class="prod-grid">
+
+        <!-- 바퀴형 -->
+        <div class="pcard" style="--c:#20406b; --cl:#eef3f9;">
+          <div class="pcard-head">🚌 바퀴형 (시저리프트)</div>
+          <div class="pcard-top">
+            <div class="pcard-img"><img src="https://drive.google.com/thumbnail?id=1IJ6CP7v--MzBXfZTmsac97NEOWbZ5O5m&amp;sz=w800" alt="바퀴형"></div>
+            <div class="pcard-tag"><div class="t1">실내 작업에 최적화된</div><div class="t2">가장 인기있는<br>표준 모델</div></div>
+          </div>
+          <div class="pcard-specs">
+            <div class="pspec"><div><div class="lbl">최대 작업 높이</div><div class="val">5.6m ~ 16.0m</div></div></div>
+            <div class="pspec"><div><div class="lbl">하중</div><div class="val">240kg ~ 450kg</div></div></div>
+          </div>
+          <div class="pcard-more" data-popup="wheel">＋ 전체 모델 제원 보기</div>
+          <div class="pcard-cols">
+            <div class="pcol env"><h5>작업환경</h5><ul>
+              <li>실내 추천</li><li>공장·창고·물류센터</li><li>평탄한 콘크리트·에폭시 바닥 실내 작업에 최적</li>
+            </ul></div>
+            <div class="pcol adv"><h5>주요장점</h5><ul>
+              <li>빠른 이동 속도와 높은 작업 효율</li><li>다양한 모델과 합리적인 가격</li><li>렌탈·구매 모두 가장 많이 선택</li><li>저소음·무배출 전동식으로 쾌적한 작업</li>
+            </ul></div>
+          </div>
+          <div class="pcard-rec"><h5>추천환경</h5><div class="rec-icons">
+            <div class="ri"><div class="em">🏭</div><span>공장 생산라인 및 제조시설</span></div>
+            <div class="ri"><div class="em">📦</div><span>물류센터·창고 점검 및 피킹</span></div>
+            <div class="ri"><div class="em">💡</div><span>천장 조명·공조(HVAC) 유지보수</span></div>
+            <div class="ri"><div class="em">🏬</div><span>쇼핑몰·백화점 전시장 시설관리</span></div>
+            <div class="ri"><div class="em">🏥</div><span>병원·호텔 공공시설</span></div>
+          </div></div>
+          <div class="pcard-point"><div class="h">👍 추천 포인트</div><p>실내 평탄 바닥에서 가장 경제적이고 효율적인 선택! 누적 판매 및 렌탈 1위, 검증된 성능과 안정성.</p></div>
+        </div>
+
+        <!-- 궤도형 -->
+        <div class="pcard" style="--c:#2e7d46; --cl:#edf6f0;">
+          <div class="pcard-head">🚜 궤도형 (트랙리프트)</div>
+          <div class="pcard-top">
+            <div class="pcard-img"><img src="https://drive.google.com/thumbnail?id=1CilZxw4QHf2q1j3dEerfcwdGJmOmuDT3&amp;sz=w800" alt="궤도형"></div>
+            <div class="pcard-tag"><div class="t1">험지와 경사지에서도 강력한</div><div class="t2">접지력과<br>안정성</div></div>
+          </div>
+          <div class="pcard-specs">
+            <div class="pspec"><div><div class="lbl">최대 작업 높이</div><div class="val">7.8m ~ 11.8m</div></div></div>
+            <div class="pspec"><div><div class="lbl">하중</div><div class="val">230kg ~ 450kg</div></div></div>
+          </div>
+          <div class="pcard-more" data-popup="track">＋ 전체 모델 제원 보기</div>
+          <div class="pcard-cols">
+            <div class="pcol env"><h5>작업환경</h5><ul>
+              <li>야외 추천</li><li>건설현장·비포장·경사지</li><li>자갈·잔디·모래·흙바닥 등 험지에서도 안정적인 주행</li>
+            </ul></div>
+            <div class="pcol adv"><h5>주요장점</h5><ul>
+              <li>고무 크롤러로 뛰어난 접지력</li><li>자동수평 기능 및 아웃트리거 장착 가능</li><li>중·대형 적재하중 대응</li><li>거친 환경에도 뛰어난 내구성</li>
+            </ul></div>
+          </div>
+          <div class="pcard-rec"><h5>추천환경</h5><div class="rec-icons">
+            <div class="ri"><div class="em">🐄</div><span>축사·비닐하우스 등 험지 작업현장</span></div>
+            <div class="ri"><div class="em">🏗️</div><span>지반시설 건설현장, 비포장 구간</span></div>
+            <div class="ri"><div class="em">⛰️</div><span>경사지·맨홀 주변 수평 유지 어려운 지역</span></div>
+          </div></div>
+          <div class="pcard-point"><div class="h">👍 추천 포인트</div><p>거친 지형, 경사지에도 안정적인 작업 성능! 강력한 접지력과 내구성으로 작업 중단 최소화.</p></div>
+        </div>
+
+        <!-- 1인용 -->
+        <div class="pcard" style="--c:#d9741f; --cl:#fdf2e8;">
+          <div class="pcard-head">👤 1인용 리프트</div>
+          <div class="pcard-top">
+            <div class="pcard-img"><img src="https://drive.google.com/thumbnail?id=1ZOJmRpbArAO8WsPRzdOQB9ncNzbacqVF&amp;sz=w800" alt="1인용"></div>
+            <div class="pcard-tag"><div class="t1">좁은 공간을 위한 컴팩트</div><div class="t2">1인 전용<br>고소작업대</div></div>
+          </div>
+          <div class="pcard-specs">
+            <div class="pspec"><div><div class="lbl">최대 작업 높이</div><div class="val">10.0m ~ 12.0m</div></div></div>
+            <div class="pspec"><div><div class="lbl">하중</div><div class="val">159kg</div></div></div>
+          </div>
+          <div class="pcard-more" data-popup="single">＋ 전체 모델 제원 보기</div>
+          <div class="pcard-cols">
+            <div class="pcol env"><h5>작업환경</h5><ul>
+              <li>협소 공간 추천</li><li>협소한 실내 및 천장 유지보수 작업</li><li>약한 지면에서도 사용 가능(대리석, 나무바닥)</li>
+            </ul></div>
+            <div class="pcol adv"><h5>주요장점</h5><ul>
+              <li>초경량 설계로 좁은 통로 이동 가능</li><li>작은 회전반경으로 협소 공간 작업 최적</li><li>간편한 설치 및 빠른 작업 준비</li><li>컴팩트한 사이즈로 실내 보관 용이</li>
+            </ul></div>
+          </div>
+          <div class="pcard-rec"><h5>추천환경</h5><div class="rec-icons">
+            <div class="ri"><div class="em">🏫</div><span>강당·학교</span></div>
+            <div class="ri"><div class="em">🏟️</div><span>체육시설</span></div>
+            <div class="ri"><div class="em">⛪</div><span>미술관·교회</span></div>
+            <div class="ri"><div class="em">🏢</div><span>모든 건물 내 유지보수용</span></div>
+          </div></div>
+          <div class="pcard-point"><div class="h">👍 추천 포인트</div><p>좁은 공간, 약한 바닥에서도 안전하고 효율적인 작업! 1인 작업으로 인건비 절감 및 빠른 작업 가능.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT FORM ===== -->
+  <section class="section section-soft" id="contact">
+    <div class="wrap">
+      <div class="center"><div class="eyebrow">CONTACT</div><h2>무료 상담 신청</h2></div>
+      <div class="form-wrap">
+        <form class="form-card" id="consultForm" novalidate>
+          <h3>무료 상담 신청</h3>
+          <p class="desc">아래 정보를 남겨주시면 담당자가 빠르게 연락드리겠습니다.</p>
+          <div class="two">
+            <div class="frow"><label>회사명 <span class="req">*</span></label><input name="company" placeholder="회사명을 입력해주세요" required></div>
+            <div class="frow"><label>담당자명 <span class="req">*</span></label><input name="manager" placeholder="담당자 성함을 입력해주세요" required></div>
+          </div>
+          <div class="two">
+            <div class="frow"><label>연락처 <span class="req">*</span></label><input name="phone" placeholder="예) 010-1234-5678" required></div>
+            <div class="frow"><label>지역(시군구) <span class="req">*</span></label><input name="region" placeholder="예) 서울시 용산구, 경기도 화성시" required></div>
+          </div>
+          <div class="frow">
+            <label>근로자 수 <span class="req">*</span></label>
+            <div class="checks">
+              <label><input type="radio" name="workers" value="10인 미만" required> 10인 미만</label>
+              <label><input type="radio" name="workers" value="10인 이상 50인 미만"> 10인 이상 50인 미만</label>
+              <label><input type="radio" name="workers" value="50인 이상"> 50인 이상</label>
+            </div>
+          </div>
+          <div class="frow">
+            <label>관심 제품 <span class="req">*</span></label>
+            <div class="checks">
+              <label><input type="checkbox" name="products" value="바퀴형 고소작업대"> 바퀴형 고소작업대</label>
+              <label><input type="checkbox" name="products" value="궤도형 고소작업대"> 궤도형 고소작업대</label>
+              <label><input type="checkbox" name="products" value="1인용 고소작업대"> 1인용 고소작업대</label>
+            </div>
+          </div>
+          <div class="frow"><label>문의 내용</label><textarea name="message" placeholder="문의 내용을 입력해주세요"></textarea></div>
+          <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:0; height:0; opacity:0;">
+          <div class="agree-wrap">
+            <label class="agree"><input type="checkbox" required> 개인정보 수집 및 이용에 동의합니다. <a href="#" class="privacy-link" onclick="return openPrivacy(event);">(자세히보기)</a></label>
+          </div>
+          <button type="submit" class="btn btn-red">무료 상담 신청하기</button>
+        </form>
+        <div>
+          <div class="side-card tel">
+            <div class="ic">📞</div>
+            <h4>대표 전화 상담</h4>
+            <div class="big">070-8983-4188<br>010-2925-9902</div>
+            <small>09:00 ~ 22:00</small>
+          </div>
+          <a class="side-card kko" href="http://pf.kakao.com/_qtxlGX/friend" target="_blank" rel="noopener" style="display:block; color:inherit;">
+            <div class="ic">💬</div>
+            <h4>카카오톡 상담</h4>
+            <small>카카오톡으로 빠르게 문의하세요</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY (자동 슬라이드, 클릭 불가) ===== -->
+  <section class="section" id="gallery">
+    <div class="wrap gal-head">
+      <h2 style="font-size:26px;">납품 및 작업 현장</h2>
+    </div>
+    <div class="wrap"><div class="marquee">
+      <div class="marquee-track" id="marqueeTrack">
+        <!-- 납품/작업현장 11장 (기획서 Drive 링크) -->
+        <img src="https://drive.google.com/thumbnail?id=1SmplE_D73XbCdec1FYE_UtDUl3goNPHG&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1saSd80UMXazjWg1ok3y8k1VsOhNcO0V1&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1ChRlB9u6T2GzZx9yFJdL5NR9S0njxhqm&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1gxe2dzRJ7ffO52BdZf2lIzKTOxPs7LEh&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1GL3oHzYld_42dQ7J73r-iLBCsXr2Pq41&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1lTcROODgFwfzFybeFpnIbx1LSs-TTksM&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1Nbgte7UovEuLBGbnUBbUViO0W7h-IE9j&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1xAf1WAXrXpxyQCvlVtHCV1tmsfJIJkkY&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1QXNFp3rTQOPesHsTP6cW3J7ilsZNH6jm&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=1ls_cL4nGdTCJKWOTBZ-yHLDH-M7uVOSA&amp;sz=w600" alt="현장">
+        <img src="https://drive.google.com/thumbnail?id=15X8Q6mIZ7MXazUHL1Hu_HxDlMg1O9pNj&amp;sz=w600" alt="현장">
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ===== GOV SUPPORT ===== -->
+  <section class="section section-soft" id="gov">
+    <div class="wrap gov-wrap">
+      <div>
+        <h2>정부지원을 통해<br>비용 부담은 줄이고<br>효율은 높이고!</h2>
+      </div>
+      <div class="ben-grid">
+        <div class="ben"><div class="ic">💰</div><b>최대 90% 지원</b><span>공단 판단금액 기준 최대 90% 지원</span></div>
+        <div class="ben"><div class="ic">👥</div><b>1~49인 사업장 가능</b><span>9인 미만 소규모 사업장 지원금 UP!</span></div>
+        <div class="ben"><div class="ic">📋</div><b>간편한 신청 절차</b><span>복잡한 서류도 간편하게</span></div>
+        <div class="ben"><div class="ic">⚡</div><b>빠른 신청 및 납품</b><span>신청 절차부터 납품까지 빠르게 지원</span></div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="point-box">
+        <span class="point-badge">POINT</span>
+        <p><b>‘공단 판단금액’</b>이란, 안전보건공단이 작업높이·적재하중·규격 기준으로 책정한 <b>지원금 산정 기준액</b>입니다.<br>지원금(70%·90%)은 <u>판매가가 아니라 공단 판단금액을 기준으로 계산</u>되며, 판매가에서 지원금을 차감한 금액이 <b>실제 자부담 금액</b>이 됩니다.</p>
+      </div>
+      <p class="point-note">※ 지원 비율·한도는 사업연도 및 기업 규모에 따라 달라질 수 있어 정확한 금액은 상담 시 진단해 드립니다.</p>
+    </div>
+  </section>
+
+  <!-- ===== STEPS ===== -->
+  <section class="section center">
+    <div class="wrap">
+      <h2>신청부터 납품까지 한눈에!</h2>
+      <div class="steps">
+        <div class="step"><div class="ic">📝</div><b>상담 신청</b><span>전화 또는 온라인 상담</span></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="ic">📐</div><b>사업장 맞춤 견적</b><span>현장에 맞는 맞춤 장비 추천</span></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="ic">📄</div><b>정부지원 신청</b><span>서류 준비 및 접수</span></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="ic">✅</div><b>선정 및 승인</b><span>선정 후 납품 안내</span></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="ic">🚚</div><b>납품 및 설치</b><span>전국 신속 납품</span></div>
+        <div class="step-arrow">›</div>
+        <div class="step"><div class="ic">🛠️</div><b>사후 관리</b><span>하자보증증권 발행, 전국 A/S 지원</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REVIEWS (답장 제거, 후기 카드) ===== -->
+  <section class="section section-soft center">
+    <div class="wrap">
+      <h2>직접 받은 <span style="color:var(--red)">고객님 후기</span></h2>
+      <p class="lead">실제 고객님들께서 남겨주신 후기입니다.</p>
+      <div class="rev-grid">
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"팀장님 아니었으면 정부지원 대상인지도 몰랐습니다. 광고 보고 가볍게 신청했는데 대상 확인 바로 해주시고 바로 제품도 추천해주셔서 너무 좋았어요. 사실 여러 업체를 알아봤는데 다른 업체에서는 원래 안내받은 자부담보다 점점 늘어나는 경우도 있고 바로 자부담을 안알려주는 경우도 많았어요. 팀장님은 깔끔하게 바로 정확한 자부담 알려주셔서 부담 없이 결정할 수 있었습니다."</p>
+          <div class="rev-who">김*현<span>경기 화성 · 금속가공 대표</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"실제 작업 환경에 잘 맞는 장비를 추천해주십니다. 작업 현장 사진을 보내드렸더니 통로 폭과 천장 높이, 쌓여있는 자재들 상황까지 고려해서 제가 신청한 모델보다 더 저렴한 모델을 추천해 주셨습니다. 괜히 큰 장비를 구매할 뻔했는데 추천 제품으로 구매하니 현장에 딱 맞고 생각보다 더 싸게사서 만족합니다."</p>
+          <div class="rev-who">박*우<span>충남 아산 · 제조업 공장장</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"정부지원이라고 해서 나중에 이것저것 추가 비용이 생길까 걱정했는데 자부담 금액과 지원금이 얼마인지 처음부터 정확하게 설명해 주셨습니다. 친절하고 투명하게 설명해주셔서 믿고 계약했습니다."</p>
+          <div class="rev-who">최*호<span>경남 김해 · 설비업 대표</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"급하게 장비가 필요해서 납기가 가장 중요했는데 예상 납품 일정과 설치 일정을 미리 알려주셔서 운영 계획을 세우기 편했습니다. 납기일도 약속한 일정대로 차질없이 진행되어 만족했습니다."</p>
+          <div class="rev-who">정*석<span>인천 남동 · 판금가공 소장</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"사다리 작업이 많아 항상 산재사고 위험에 불안했는데 고소작업대를 도입한 뒤 작업자들이 훨씬 안전하게 작업하고 있습니다. 직원들도 전보다 훨씬 편하다고 이야기합니다."</p>
+          <div class="rev-who">한*진<span>대구 달서 · 자동차부품 생산팀장</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"사다리 계속 옮기면서 작업해서 시간도 많이 걸리고 위험한 순간도 꽤 있었는데 고소작업대를 사용한 뒤 안전하고 빠르게 작업을 할 수 있으니 좋네요. 작업 효율도 좋아지고 직원들도 너무 좋아합니다. 렌탈비가 비싸서 장비 도입도 많이 비쌀 줄 알았는데 빨리 알아보지 않은게 바보같네요ㅋㅋㅋ 진작 도입할 걸 그랬어요"</p>
+          <div class="rev-who">윤*철<span>부산 강서 · 물류센터장</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"다른 업체들은 제품 카달로그만 보내주고 끝이었는데 온길산업은 먼저 사용 환경을 확인한 뒤 제품을 추천해 주셨습니다. 실제 현장에서 사용해 보니 추천해 주신 이유를 알겠더라고요. 주말에 연락해도 늘 빠르고 친절하게 응대해주시는 모습에 감동받았습니다. 감사합니다!"</p>
+          <div class="rev-who">서*원<span>충북 청주 · 유리가공 대표</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★</div>
+          <p class="rev-text">"다른 업체에 진행했을 때는 두 번이나 떨어졌어요. 그 뒤로 우리는 안되는구나 하고 포기했는데 팀장님이 추천해준 사업으로 신청했더니 한 번에 선정됐네요. 서류만 준비하면 나머지는 복잡한 정부지원사업 과정은 대부분 도와주시니까 신청부터 선정, 납품까지 한 번에 진행되어 정말 편했습니다."</p>
+          <div class="rev-who">이*민<span>경기 시흥 · 기계제작 대표</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"장비를 구매하면 구매 후가 더 중요하다고 생각합니다. 사용 방법도 자세히 설명해 주시고 A/S 절차도 미리 안내해 주셔서 안심이 됐습니다. 다음 장비도 온길산업을 통해 구매할 생각입니다."</p>
+          <div class="rev-who">오*준<span>경기 안산 · 철강가공 대표</span></div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">★★★★★</div>
+          <p class="rev-text">"지원 대상 확인부터 현장 사진 검토, 장비 추천, 자부담 안내, 납품 일정까지 막히는 부분이 없었습니다. 무엇보다 우리 현장과 정부지원사업 선정대상에 맞는 장비를 추천해 주셔서 선정 될 수 있었고, 도입된 장비 덕분에 작업이 훨씬 안전하고 빨라졌습니다. 상담부터 사후관리까지 모두 만족합니다."</p>
+          <div class="rev-who">강*민<span>충북 음성 · 식품제조 대표</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrap">
+      <div class="ftop">
+        <div class="flogo">온길산업</div>
+        <div class="sns">
+          <a href="https://www.instagram.com/ongil_industry/" target="_blank" rel="noopener" title="인스타그램"><img src="https://drive.google.com/thumbnail?id=1T4mLv72uIQ_XFC8ztCcdm3kpCNOFPz_u&amp;sz=w100" alt="인스타그램"></a>
+          <a href="http://pf.kakao.com/_qtxlGX/friend" target="_blank" rel="noopener" title="카카오톡"><img src="https://drive.google.com/thumbnail?id=1okOB515OolOYbDmQa5R_j1TM-8elldP8&amp;sz=w100" alt="카카오톡"></a>
+        </div>
+      </div>
+      <div>
+        주소 세종특별자치시 호려울로 9, 7층 (네이버타워) · 대표전화 070-8983-4188, 010-2925-9902<br>
+        © 2026 ONGIL INDUSTRY. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== FLOATING BUTTONS ===== -->
+  <div class="floats">
+    <a href="#" id="floatTop" title="맨 위로">▲</a>
+    <a href="#" class="js-tel" title="전화"><img class="logo" src="https://drive.google.com/thumbnail?id=1qxDS0RagUfT9TE0ggHRPvIziRYiPJsaQ&amp;sz=w100" alt="전화"></a>
+    <a href="http://pf.kakao.com/_qtxlGX/friend" target="_blank" rel="noopener" title="카카오톡"><img class="logo" src="https://drive.google.com/thumbnail?id=1okOB515OolOYbDmQa5R_j1TM-8elldP8&amp;sz=w100" alt="카카오톡"></a>
+    <a href="https://www.instagram.com/ongil_industry/" target="_blank" rel="noopener" title="인스타그램"><img class="logo" src="https://drive.google.com/thumbnail?id=1T4mLv72uIQ_XFC8ztCcdm3kpCNOFPz_u&amp;sz=w100" alt="인스타그램"></a>
+    <a href="#contact" title="상담신청"><img class="logo" src="https://drive.google.com/thumbnail?id=1kLTphUmtFz5aW2dpUY8WrXdokPzbSwHh&amp;sz=w100" alt="상담신청"></a>
+    <a href="#" id="floatBottom" title="맨 아래로">▼</a>
+  </div>
+
+  <!-- ===== 전화번호 선택 팝업 ===== -->
+  <div class="tel-back" id="telModal">
+    <div class="tel-box">
+      <h4>전화 상담 연결</h4>
+      <p class="sub">연결할 번호를 선택하세요</p>
+      <a href="tel:07089834188" class="tel-opt a"><small>대표전화</small><span class="num">070-8983-4188</span></a>
+      <a href="tel:01029259902" class="tel-opt b"><small>휴대전화</small><span class="num">010-2925-9902</span></a>
+      <button class="tel-close" onclick="closeTel()">닫기</button>
+    </div>
+  </div>
+
+  <!-- ===== 개인정보 수집·이용 동의 팝업 ===== -->
+  <div class="privacy-back" id="privacyModal">
+    <div class="privacy-modal">
+      <h4>개인정보 수집 및 이용 동의</h4>
+      <div class="privacy-body">▶ 개인정보의 수집 및 이용목적
+- 서비스 이용에 따른 본인식별, 실명확인, 가입의사 확인, 연령제한 서비스 이용
+- 고지사항 전달, 불만처리 의사소통 경로 확보, 물품배송 시 정확한 배송지 정보 확보
+- 신규 서비스 등 최신정보 안내 및 개인맞춤서비스 제공을 위한 자료
+- 기타 원활한 양질의 서비스 제공 등
+
+▶ 수집하는 개인정보의 항목
+- 이름, 이메일, 주소, 연락처, 핸드폰번호, 그 외 선택항목
+
+▶ 개인정보의 보유 및 이용기간
+- 원칙적으로 개인정보의 수집 또는 제공받은 목적 달성 시 지체 없이 파기합니다.
+- 다만, 원활한 서비스의 상담을 위해 상담 완료 후 내용을 3개월간 보유할 수 있으며, 전자상거래에서의 소비자보호에 관한 법률 등 타법률에 의해 보존할 필요가 있는 경우에는 일정기간 보존합니다.</div>
+      <button class="privacy-close" onclick="closePrivacy()">확인</button>
+    </div>
+  </div>
+
+  <!-- ===== 신청 결과/검증 팝업 ===== -->
+  <div class="result-back" id="resultModal">
+    <div class="result-box err" id="resultBox">
+      <div class="result-ic" id="resultIc">!</div>
+      <h4 id="resultTitle"></h4>
+      <div class="result-msg" id="resultMsg"></div>
+      <button class="result-close" onclick="closeResult()">확인</button>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT SPEC MODAL (JS로 채움) ===== -->
+  <div class="modal-back" id="specModal">
+    <div class="modal">
+      <div class="modal-head">
+        <div><h3 id="modalTitle">제품 사양</h3><p id="modalSub">온길산업에서 취급하는 고소작업대의 상세 사양입니다.</p></div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalBody"></div>
+      <p class="modal-note">※ 상기 사양은 제품의 성능 향상 및 제조사 사정에 따라 예고 없이 변경될 수 있습니다.</p>
+    </div>
+  </div>
+
+  <script>
+    /* ===== 히어로 캐러셀 (3장 자동 전환) ===== */
+    (function(){
+      var slides=document.querySelectorAll('.hero-slides .slide');
+      var dots=document.querySelectorAll('#heroDots i');
+      var num=document.getElementById('heroNum');
+      var i=0;
+      function show(n){
+        i=(n+slides.length)%slides.length;
+        slides.forEach(function(s,k){ s.classList.toggle('on',k===i); });
+        dots.forEach(function(d,k){ d.classList.toggle('on',k===i); });
+        num.textContent='0'+(i+1);
+      }
+      dots.forEach(function(d){ d.addEventListener('click',function(){ show(+d.dataset.i); }); });
+      setInterval(function(){ show(i+1); },4000);
+    })();
+
+    /* ===== 갤러리 자동 슬라이드: 이미지 복제해 무한 루프 ===== */
+    (function(){
+      var t=document.getElementById('marqueeTrack');
+      t.innerHTML=t.innerHTML+t.innerHTML;
+    })();
+
+    /* ===== 플로팅 위/아래 화살표 → 최상단/최하단 ===== */
+    document.getElementById('floatTop').addEventListener('click',function(e){
+      e.preventDefault();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+    document.getElementById('floatBottom').addEventListener('click',function(e){
+      e.preventDefault();
+      var h=Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      window.scrollTo({top:h,behavior:'smooth'});
+    });
+
+    /* ===== 모바일 햄버거 메뉴 ===== */
+    (function(){
+      var t=document.getElementById('navToggle'), m=document.getElementById('navMenu');
+      if(!t || !m) return;
+      t.addEventListener('click', function(){ m.classList.toggle('open'); });
+      m.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ m.classList.remove('open'); }); });
+    })();
+
+    /* ===== 전화문의 → 번호 선택 팝업 (공통) ===== */
+    function openTel(){ document.getElementById('telModal').classList.add('open'); }
+    function closeTel(){ document.getElementById('telModal').classList.remove('open'); }
+    document.querySelectorAll('.js-tel').forEach(function(el){
+      el.addEventListener('click', function(e){ e.preventDefault(); openTel(); });
+    });
+    document.getElementById('telModal').addEventListener('click', function(e){ if(e.target===this) closeTel(); });
+    document.querySelectorAll('#telModal .tel-opt').forEach(function(el){
+      el.addEventListener('click', function(){ closeTel(); });
+    });
+
+    /* ===== 신청 결과/검증 팝업 (공통) ===== */
+    function showResult(type, title, html){
+      document.getElementById('resultBox').className = 'result-box ' + (type === 'ok' ? 'ok' : 'err');
+      document.getElementById('resultIc').textContent = (type === 'ok' ? '✓' : '!');
+      document.getElementById('resultTitle').textContent = title;
+      document.getElementById('resultMsg').innerHTML = html;
+      document.getElementById('resultModal').classList.add('open');
+    }
+    function closeResult(){ document.getElementById('resultModal').classList.remove('open'); }
+    document.getElementById('resultModal').addEventListener('click', function(e){ if(e.target === this) closeResult(); });
+
+    /* ===== 개인정보 동의 팝업 ===== */
+    function openPrivacy(e){ if(e){ e.preventDefault(); e.stopPropagation(); } document.getElementById('privacyModal').classList.add('open'); return false; }
+    function closePrivacy(){ document.getElementById('privacyModal').classList.remove('open'); }
+    document.getElementById('privacyModal').addEventListener('click', function(e){ if(e.target === this) closePrivacy(); });
+
+    /* ===== 제품 사양 팝업 데이터 (팝업 작업.xlsx 기반) ===== */
+    var COLS=['모델명','작업대 최대높이<br>(발판 높이)','최대 작업 높이','전장 / 전폭 / 전고<br>(난간대 접은 후)','사용하중<br>(적재용량)','자체중량<br>(장비무게)'];
+    var BRANDCOLOR={ '허리드':'#e2231a', '지주':'#1c5fd6', '멘톨':'#f5821f', '지엑스':'#0f9d8f' };
+
+    var POPUPS={
+      wheel:{ title:'바퀴형 (시저리프트)', sub:'평탄한 실내·물류 현장에 최적화된 대표 시저리프트 라인업입니다.',
+        brands:[
+          { name:'허리드', rows:[
+            ['HS0407E','3.6m','5.6m','1.53m / 0.76m / 1.53m','240kg','880kg'],
+            ['HS0607H','5.8m','7.8m','1.86m / 0.76m / 1.83m','270kg','1,560kg'],
+            ['HS0812H','7.8m','9.8m','2.49m / 1.18m / 1.83m','450kg','2,550kg'],
+            ['HS1012H','9.8m','11.8m','2.49m / 1.18m / 1.96m','400kg','2,840kg'],
+            ['HS1212E','11.8m','13.8m','2.49m / 1.19m / 1.92m','320kg','3,045kg'],
+          ], note:'※ 이외 기타 제원사항은 허리드 제품 카탈로그 확인 필요.' },
+          { name:'지주', rows:[
+            ['JC-25','5.82m','8.2m','1.90m / 0.80m / 1.0m','280kg','1,300kg'],
+            ['JC-30','8.05m','10.1m','2.50m / 1.20m / 1.24m','400kg','2,200kg'],
+            ['JC-31','9.68m','12.1m','2.50m / 1.20m / 1.24m','400kg','2,300kg'],
+            ['JC-40','11.8m','14.2m','2.80m / 1.46m / 1.38m','362kg','3,000kg'],
+          ], note:'※ 전고는 제품 전체 높이(난간을 펼친 상태) 기준입니다.' },
+          { name:'멘톨', rows:[
+            ['XE60MINI ED PLUS','4.4m','6.4m','1.49m / 0.76m / 1.89m','240kg','920kg'],
+            ['XE80N','5.8m','7.8m','1.85m / 0.77m / 1.78m','230kg','1,490kg'],
+            ['XE100W','8.0m','10.0m','2.42m / 1.2m / 1.69m','450kg','2,520kg'],
+            ['XE120W','10.0m','12.0m','2.42m / 1.2m / 1.82m','320kg','2,950kg'],
+            ['XE140W','12.0m','14.0m','2.42m / 1.2m / 1.95m','350kg','3,245kg'],
+            ['XE160W','14.0m','16.0m','2.42m / 1.2m / 2.13m','230kg','3,400kg'],
+          ] },
+          { name:'지엑스', rows:[
+            ['GX0408HD','4.2m','6.2m','1.46m / 0.76m / 1.515m','250kg','900kg'],
+            ['GX0608HD','5.8m','7.8m','1.83m / 0.76m / 1.58m','250kg','1,500kg'],
+            ['GX0812HD','7.8m','9.8m','2.445m / 1.20m / 1.76m','400kg','2,150kg'],
+            ['GX1012HD','9.8m','11.8m','2.445m / 1.20m / 2.00m','400kg','2,750kg'],
+            ['GX1212HD','11.8m','13.8m','2.855m / 1.37m / 2.30m','360kg','2,950kg'],
+            ['GX1414AC','13.8m','15.8m','3.14m / 1.53m / 2.30m','227kg','3,900kg'],
+          ] },
+        ] },
+      track:{ title:'궤도형 (트랙리프트)', sub:'비포장·경사지 등 험지에서도 안정적으로 주행하는 궤도형 라인업입니다.',
+        brands:[
+          { name:'허리드', rows:[
+            ['HC0610E','5.8m','7.8m','1.96m / 1.08m / 1.91m','230kg','1,624kg'],
+            ['HC0813E','7.8m','9.8m','2.53m / 1.33m / 1.76m','450kg','2,990kg'],
+            ['HC0813EO (아웃트리거 장착)(*1)','7.8m','9.8m','2.83m / 1.60m / 1.76m','450kg','3,480kg'],
+            ['HC1013E','9.8m','11.8m','2.53m / 1.33m / 1.89m','320kg','3,100kg'],
+            ['HC1013EO (아웃트리거 장착)(*1)','9.8m','11.8m','2.83m / 1.60m / 1.89m','320kg','3,660kg'],
+            ['HC0607EA (자동수평)(*2)','5.9m','7.9m','2.02m / 1.47m / 2.00m','250kg','1,890kg'],
+          ], note:'(*1) 아웃트리거 장착: 궤도형 전용 아웃트리거 장착으로 경사로에서도 안전한 작업환경 제공. 아웃트리거 4개가 동시 작동해 자동 수평 레벨링 및 지지<br>(*2) 자동수평 기능: 경사진 곳에서도 자동수평 조절 기능으로 제약없이 사용 가능, 최대 사용 경사도(전방20°, 후방16°, 좌우14°)' },
+          { name:'멘톨', rows:[
+            ['XE80CT','6m','8m','2.15m / 1.0m / 2.1m','230kg','1,250kg'],
+          ] },
+        ] },
+      single:{ title:'1인용 리프트', sub:'초경량·소형으로 협소한 실내 및 천장 유지보수 작업에 적합한 1인용 리프트입니다.',
+        brands:[
+          { name:'지주', rows:[
+            ['JM-25','7.8m','10.0m','1.36m / 0.78m / 1.99m','159kg','320kg'],
+            ['JM-32','9.7m','12.0m','1.4m / 0.78m / 1.99m','159kg','380kg'],
+          ] },
+          { name:'멘톨', rows:[
+            ['AMP32','10.0m','12.0m','1.42m / 0.74m / 1.97m','159kg','AC타입 480kg / DC타입 535kg'],
+          ] },
+        ] },
+    };
+
+    function renderBrand(b){
+      var head='<tr>'+COLS.map(function(c){return '<th>'+c+'</th>';}).join('')+'</tr>';
+      var body=b.rows.map(function(r){
+        return '<tr>'+r.map(function(cell,idx){ return '<td'+(idx===0?' class="model"':'')+'>'+cell+'</td>'; }).join('')+'</tr>';
+      }).join('');
+      var color=BRANDCOLOR[b.name]||'#333';
+      return '<div class="spec-block">'
+        +'<div class="spec-brand"><span class="badge" style="background:'+color+'">'+b.name+'</span> <span class="cnt">('+b.rows.length+'종)</span></div>'
+        +'<div class="table-scroll"><table class="spec-table"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>'
+        +(b.note?'<p class="spec-note">'+b.note+'</p>':'')
+        +'</div>';
+    }
+
+    function openModal(key){
+      var p=POPUPS[key]; if(!p) return;
+      document.getElementById('modalTitle').textContent=p.title+' 제품 사양';
+      document.getElementById('modalSub').textContent=p.sub;
+      document.getElementById('modalBody').innerHTML=p.brands.map(renderBrand).join('');
+      document.getElementById('specModal').classList.add('open');
+      document.body.style.overflow='hidden';
+    }
+    function closeModal(){
+      document.getElementById('specModal').classList.remove('open');
+      document.body.style.overflow='';
+    }
+    document.querySelectorAll('[data-popup]').forEach(function(el){
+      el.addEventListener('click',function(){ openModal(el.dataset.popup); });
+    });
+    document.getElementById('specModal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeModal(); closeTel(); closeResult(); closePrivacy(); } });
+
+    /* ===== 상담 폼 → Google Apps Script 전송 ===== */
+    // ▼▼ Apps Script 웹앱 배포 후 나오는 exec URL을 여기에 붙여넣으세요 ▼▼
+    var GAS_URL = 'https://script.google.com/macros/s/AKfycbx0oG-PEwtlwJU_DhLcW1M87r3cHMsTcIZL9PFXbCOytian1CaZxH5ljyfKHE0Y6b0k1Q/exec';
+    (function(){
+      var form = document.getElementById('consultForm');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // 허니팟(봇이 채우면 조용히 무시)
+        var hp = form.querySelector('[name="_hp"]');
+        if(hp && hp.value){ return; }
+        if(GAS_URL.indexOf('http') !== 0){
+          showResult('err', '전송 설정 필요', 'Apps Script 배포 후 exec URL을 index.html의 GAS_URL에 넣어주세요.');
+          return;
+        }
+        var now = Date.now();
+        // ① 브라우저당 30초 내 재전송 방지(내용 무관)
+        var last = Number(localStorage.getItem('ongil_last') || 0);
+        if(now - last < 30000){
+          showResult('err', '잠시만 기다려주세요', '방금 신청이 접수되었습니다. 잠시 후 다시 시도해주세요.');
+          return;
+        }
+        // 입력값 수집
+        var elCompany = form.querySelector('[name="company"]');
+        var elManager = form.querySelector('[name="manager"]');
+        var elPhone   = form.querySelector('[name="phone"]');
+        var elRegion  = form.querySelector('[name="region"]');
+        var elAgree   = form.querySelector('.agree input[type="checkbox"]');
+        var company = elCompany.value.trim();
+        var manager = elManager.value.trim();
+        var phone   = elPhone.value.trim();
+        var region  = elRegion.value.trim();
+        var w = form.querySelector('[name="workers"]:checked');
+        var workers = w ? w.value : '';
+        var products = Array.prototype.slice.call(form.querySelectorAll('[name="products"]:checked'))
+          .map(function(c){ return c.value; }).join(', ');
+        var message = form.querySelector('[name="message"]').value.trim();
+
+        // ── 유효성 검사 (통과 못하면 필드별 에러 메시지 표시) ──
+        function clearErrors(){
+          var es = form.querySelectorAll('.ferr');
+          for(var i=0;i<es.length;i++){ es[i].parentNode.removeChild(es[i]); }
+          var iv = form.querySelectorAll('.invalid');
+          for(var j=0;j<iv.length;j++){ iv[j].classList.remove('invalid'); }
+        }
+        function markError(el, msg){
+          if(el.classList){ el.classList.add('invalid'); }
+          var host = (el.closest && (el.closest('.frow') || el.closest('.agree-wrap') || el.closest('.agree'))) || el.parentNode;
+          var err = document.createElement('div');
+          err.className = 'ferr';
+          err.textContent = msg;
+          host.appendChild(err);
+        }
+        clearErrors();
+        var firstErr = null;
+        var errs = [];
+        function fail(el, msg){ markError(el, msg); errs.push(msg); if(!firstErr){ firstErr = el; } }
+        var phoneDigits = phone.replace(/[^0-9]/g, '');
+        if(!company) fail(elCompany, '회사명을 입력해주세요.');
+        if(!manager) fail(elManager, '담당자명을 입력해주세요.');
+        if(!phone) fail(elPhone, '연락처를 입력해주세요.');
+        else if(!/^0\d{8,10}$/.test(phoneDigits)) fail(elPhone, '올바른 연락처 형식이 아닙니다. 예) 010-1234-5678');
+        if(!region) fail(elRegion, '지역(시군구)을 입력해주세요.');
+        if(!w) fail(form.querySelector('[name="workers"]'), '근로자 수를 선택해주세요.');
+        if(!products) fail(form.querySelector('[name="products"]'), '관심 제품을 하나 이상 선택해주세요.');
+        if(elAgree && !elAgree.checked) fail(elAgree, '개인정보 수집 및 이용에 동의해주세요.');
+        if(firstErr){
+          showResult('err', '입력 정보를 확인해주세요', '<ul>' + errs.map(function(m){ return '<li>' + m + '</li>'; }).join('') + '</ul>');
+          if(firstErr.focus){ try { firstErr.focus(); } catch(e2){} }
+          return;
+        }
+
+        // ② 같은 내용 반복 전송 방지(10분) — 연락처+회사+문의 동일 시
+        var sig = (phone + '|' + company + '|' + message).replace(/\s+/g, '');
+        var lastSig = localStorage.getItem('ongil_sig') || '';
+        var lastSigT = Number(localStorage.getItem('ongil_sig_t') || 0);
+        if(sig === lastSig && now - lastSigT < 600000){
+          showResult('err', '이미 접수된 신청입니다', '동일한 내용의 신청이 이미 접수되었습니다. 잠시 후 다시 시도해주세요.');
+          return;
+        }
+
+        var body = new URLSearchParams();
+        body.append('company', company);
+        body.append('manager', manager);
+        body.append('phone',   phone);
+        body.append('region',  region);
+        body.append('workers', workers);
+        body.append('products', products);
+        body.append('message', message);
+        body.append('agree', (elAgree && elAgree.checked) ? '동의' : '미동의');
+
+        var btn = form.querySelector('button[type="submit"]');
+        if(btn){ btn.disabled = true; btn.textContent = '전송 중...'; }
+        fetch(GAS_URL, { method:'POST', body: body })
+          .then(function(res){ return res.json(); })
+          .then(function(data){
+            if(data && data.result === 'success'){
+              localStorage.setItem('ongil_last', String(now));
+              localStorage.setItem('ongil_sig', sig);
+              localStorage.setItem('ongil_sig_t', String(now));
+              showResult('ok', '상담 신청이 접수되었습니다', '담당자가 빠르게 연락드리겠습니다. 감사합니다.');
+              form.reset();
+            } else if(data && data.result === 'duplicate'){
+              showResult('err', '이미 접수된 신청입니다', data.message || '동일한 내용의 신청이 이미 접수되었습니다.');
+            } else {
+              showResult('err', '전송 실패', '신청 처리에 실패했습니다. 잠시 후 다시 시도하거나 전화로 문의해주세요.');
+            }
+          })
+          .catch(function(){
+            showResult('err', '전송 실패', '신청 전송에 실패했습니다. 네트워크 상태를 확인하시거나 전화로 문의해주세요.');
+          })
+          .finally(function(){
+            if(btn){ btn.disabled = false; btn.textContent = '무료 상담 신청하기'; }
+          });
+      });
+    })();
+  </script>
+
+</body>
+</html>
